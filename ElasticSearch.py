@@ -1,8 +1,9 @@
 from elasticsearch import Elasticsearch
 
 class ElasticSearch:
-    def __init__():
-        self.es = Elasticsearch(['http://localhost:9200'])
+    def __init__(url):
+        #'http://localhost:9200'
+        self.es = Elasticsearch([url])
 
     # links = soup.find_all('a', class_='article-link')
     def indexLinks(query, links):

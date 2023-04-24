@@ -1,0 +1,15 @@
+<h1>Search Results</h1>
+<ul>
+{% for result in results %}
+    <li>
+        <h2><a href="{{ result.url }}">{{ result.title }}</a></h2>
+        <p>{{ result.summary }}</p>
+        <form action="/feedback" method="POST">
+            <input type="hidden" name="article_id" value="{{ result.id }}">
+            <label for="feedback">Feedback:</label>
+            <textarea name="feedback"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
