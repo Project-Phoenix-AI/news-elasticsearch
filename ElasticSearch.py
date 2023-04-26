@@ -6,7 +6,7 @@ docker run -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -e "discovery.type=sing
 
 class ElasticSearch:
     def __init__(url):
-        #'http://localhost:9200'
+        #http://localhost:9200
         self.es = Elasticsearch([url])
         self.idx = 'data'
         self.es.indices.create(index=self.idx)
