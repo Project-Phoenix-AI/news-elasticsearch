@@ -14,6 +14,10 @@ class ElasticSearch:
     def indexLinks(doc):
 
         # Index the articles in Elasticsearch
-        self.es.index(index=self.idx, body={})   
+        self.es.index(index=self.idx, doc={})
+
+
+
+
 
 

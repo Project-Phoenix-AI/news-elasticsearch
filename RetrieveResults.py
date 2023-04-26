@@ -1,6 +1,6 @@
 import math
 
-def ranked_retrieval(results, query, es):
+def RankedRetrieval(results, query, es):
     # index is a dictionary containing document lengths for each docID
     for posting in results:
         # Term frequency in corpus.
@@ -18,7 +18,9 @@ def ranked_retrieval(results, query, es):
         posting['score'] = tf_idf_dt
 
     # Sort the postings list according to scores
-    results.sort(key=lambda x: x.score, reverse=True)
+    #  Sort the dictionary by decreasing score
+    results = {k: v for k, v in sorted(results.items(), key=lambda x: x[1]['score'], reverse=True)}
+    
     return results
 
 # Not finished

@@ -1,9 +1,9 @@
 from flask import Flask, request, render_template
 #from elasticsearch import Elasticsearch
 from ElasticSearch import ElasticSearch
+from RetrieveResults import *
 
 app = Flask(__name__, template_folder='.')
-
 es = ElasticSearch('http://localhost:9200')
 
 @app.route('/')
@@ -14,13 +14,29 @@ def index():
 def search():
     query = request.form['query']  # Extract the search query from the form data
 
-    if query >= 0:
+    if len(query) >= 0:
         # Result algorithm
-        pass
-    else:
-        res = es.index(index=es.idx, body={'query': {'match': {'content': query}}})
+        terms = [term.term for term in query.queryterm]
+        results = []
+        all_matches={}
 
-    return render_template('search_results.html', res)
+        # for each query term, retrieve its postings list and add up scores for each document
+        for term in terms:
+            for key, value in es.items():
+                if isinstance(value, dict):
+                    for inner_key, inner_value in value.items():
+                        if term in (inner_value['text'] or inner_value['title']):
+                            if key not in all_matches:
+                                all_matches[key]= value
+
+            results = RankedRetrieval(all_matches, term, es)
+        #  Sort the dictionary by decreasing score
+        results = {k: v for k, v in sorted(results.items(), key=lambda x: x[1]['score'], reverse=True)}
+        return render_template('search_results.html', results)
+    else:
+
+        results = es.get(index='data')
+        return render_template('search_results.html', results)
 
 @app.route('/feedback', methods=['POST'])
 def submit_feedback():
