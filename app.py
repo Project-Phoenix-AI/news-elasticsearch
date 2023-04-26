@@ -1,10 +1,10 @@
 from flask import Flask, request, render_template
-from elasticsearch import Elasticsearch
+#from elasticsearch import Elasticsearch
+from ElasticSearch import ElasticSearch
 
 app = Flask(__name__, template_folder='.')
 
-es = Elasticsearch(['http://localhost:9200'])
-index_name = 'my_index'
+es = ElasticSearch('http://localhost:9200')
 
 @app.route('/')
 def index():
@@ -13,9 +13,14 @@ def index():
 @app.route('/search', methods=['POST'])
 def search():
     query = request.form['query']  # Extract the search query from the form data
-    res = es.index(index=index_name, body={'query': {'match': {'content': query}}})
-    hits = res['hits']['hits']
-    return render_template('search_results.html', hits=hits)
+
+    if query >= 0:
+        # Result algorithm
+        pass
+    else:
+        res = es.index(index=es.idx, body={'query': {'match': {'content': query}}})
+
+    return render_template('search_results.html', res)
 
 @app.route('/feedback', methods=['POST'])
 def submit_feedback():
