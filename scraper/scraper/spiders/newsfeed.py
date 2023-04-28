@@ -6,7 +6,7 @@ import scrapy
 class Spider(scrapy.Spider):
     name = "newsfeed"
 
-    def start_requests(self):
+    def start_requests(self, **kwargs):
         urls = [
             'https://www.bbc.com/',
             'https://www.bbc.com/news',
@@ -21,16 +21,13 @@ class Spider(scrapy.Spider):
             print("news:::: " + news.get())
         
         for news in allNews:
-            name = news.xpath('./text()').get().strip()
-            
-
             try:
-                yield {
+                yield self.output_callback({
                     'name': news.xpath('/h3/text()|./text()').get().strip(),
                     'link': news.xpath('./@href').get().strip(),
-                }
+                })
             except:
-                yield {
+                yield self.output_callback({
                     'name': "none",
                     'link': "none",
-                }
+                })
