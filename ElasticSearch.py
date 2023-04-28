@@ -45,7 +45,9 @@ if __name__ == '__main__':
     es.crawl()
     es.run()
     print("This is the result")
+    print("Number of results = " + str(len(es.scraped_items)))
     print(es.scraped_items)
+    
 
 
 
