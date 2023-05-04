@@ -27,7 +27,6 @@ class ElasticSearch():
     # links = soup.find_all('a', class_='article-link')
     def indexLinks(self, query, links):
         self.es.indices.create(index=str(query))
-
         # Index the articles in Elasticsearch
         for link in links:
             title = link.text

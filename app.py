@@ -1,9 +1,8 @@
 from flask import Flask, request, render_template
-#from elasticsearch import Elasticsearch
 from ElasticSearch import ElasticSearch
 from RetrieveResults import *
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__, template_folder='./templates')
 es = ElasticSearch('http://localhost:9200')
 
 @app.route('/')
