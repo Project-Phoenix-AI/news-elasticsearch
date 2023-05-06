@@ -2,10 +2,8 @@ from elasticsearch import Elasticsearch
 import scrapy
 from scrapy.crawler import CrawlerProcess
 from scraper.scraper.spiders.newsfeed import Spider
+import json
 
-"""
-docker run -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -e "discovery.type=single-node" -e "xpack.security.enabled=false" -e "http.cors.enabled=true" -e "http.cors.allow-origin=/http?://localhost(:[0-9]+)?/" docker.elastic.co/elasticsearch/elasticsearch:8.1.2
-"""
 
 class ElasticSearch():
     def __init__(self, url):
@@ -28,15 +26,7 @@ class ElasticSearch():
     def indexLinks(self, query, links):
         self.es.indices.create(index=str(query))
         # Index the articles in Elasticsearch
-        for link in links:
-            title = link.text
-            url = link['href']
-
-            # Extract other metadata as needed
-            doc = {
-                'title': title,
-                'url': url}
-
+        for doc in self.scraped_items:
             self.es.index(index=str(query), body=doc)
 
 if __name__ == '__main__':
@@ -44,12 +34,11 @@ if __name__ == '__main__':
     es.crawl()
     es.run()
     print("This is the result")
-    print("Number of results = " + str(len(es.scraped_items)))
-    print(es.scraped_items)
-    
+    json_object = json.dumps(es.scraped_items, indent=4)
 
+    with open("sample.json", "w") as outfile:
+        outfile.write(json_object)
 
-
-
+    print(len(es.scraped_items))
 
 
