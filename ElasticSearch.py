@@ -54,8 +54,8 @@ class ElasticSearch():
 
 if __name__ == '__main__':
     es = ElasticSearch('http://localhost:9200')
-    #es.crawl()
-    #es.run()
+    es.crawl()
+    es.run()
     print("This is the result")
     #es.get_scraped_items()
 
@@ -76,21 +76,21 @@ if __name__ == '__main__':
                         
     # }
 
-    query1 = defaultdict(dict)
-    query1['match_phrase']['text'] ="pizza"
-    #query1['match_phrase']['slope'] ="2"
-    print(query1)
+    # query1 = defaultdict(dict)
+    # query1['match_phrase']['text'] ="pizza"
+    # #query1['match_phrase']['slope'] ="2"
+    # print(query1)
 
 
     
-    #q['match_phrase']['text'] = "cluster"
-    #q = q.format(query_ = "pizza")
-    #print(' = query = ')
-    #print(q)
-    resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
-    resp = resp['hits']
+    # #q['match_phrase']['text'] = "cluster"
+    # #q = q.format(query_ = "pizza")
+    # #print(' = query = ')
+    # #print(q)
+    # resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
+    # resp = resp['hits']
 
-    print(resp)
+    # print(resp)
     
 
 

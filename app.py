@@ -13,23 +13,25 @@ es = Elasticsearch('http://localhost:9200')
 
 @app.route('/',methods =["GET","POST"])
 def index():
-    #json_object = json.dumps(es.scraped_items, indent=4)
-    #with open("sample.json", "w") as outfile:
-    #    outfile.write(json_object)
-    #print(len(es.scraped_items))
     if request.method == 'POST':
         q = request.form['query']  # Extract the search query from the form data
         results = -1
         if len(q.split(' ')) >= 0:
             # Result algorithm
             query = defaultdict(dict)
-            query['match']['text'] = q
+            #query['match']['text'] = q
+
+            query['query_string']['fields'] = ["title","text"]
+            query['query_string']['query'] = q
+            query['query_string']['default_operator'] = 'OR'
+
+
+
             resp = es.search(index="test_index", query=query)
-            #resp = resp['hits']
             results = resp['hits']['hits']
 
-            print(type(results))
-            print(results)
+            # print(type(results))
+            # print(results)
             return render_template('/search_results.html',results=results)
     return render_template('/index.html')
 
