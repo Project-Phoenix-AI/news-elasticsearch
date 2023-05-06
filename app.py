@@ -1,20 +1,59 @@
+from collections import defaultdict
 from flask import Flask, request, render_template
-from ElasticSearch import ElasticSearch
+#from ElasticSearch import ElasticSearch
+from elasticsearch import Elasticsearch
+
 from RetrieveResults import *
+import requests
+import json
+app = Flask(__name__)
+#'http://localhost:9200'
+es = Elasticsearch('http://localhost:9200')
 
-app = Flask(__name__, template_folder='./templates')
-es = ElasticSearch('http://localhost:9200')
 
-@app.route('/')
+@app.route('/',methods =["GET","POST"])
 def index():
-    return render_template('./index.html')
+    #json_object = json.dumps(es.scraped_items, indent=4)
+    #with open("sample.json", "w") as outfile:
+    #    outfile.write(json_object)
+    #print(len(es.scraped_items))
+    if request.method == 'POST':
+        q = request.form['query']  # Extract the search query from the form data
+        results = -1
+        if len(q.split(' ')) >= 0:
+            # Result algorithm
+            query = defaultdict(dict)
+            query['match']['text'] = q
+            resp = es.search(index="test_index", query=query)
+            #resp = resp['hits']
+            results = resp['hits']['hits']
+
+            print(type(results))
+            print(results)
+            return render_template('/search_results.html',results=results)
+    return render_template('/index.html')
+
+
+
+
+
+
+
+
 
 @app.route('/search', methods=['POST'])
 def search():
     query = request.form['query']  # Extract the search query from the form data
-
-    if len(query) >= 0:
+    results = -1
+    if len(query.split(' ')) >= 0:
         # Result algorithm
+        query = defaultdict(dict)
+        query['match']['text'] = query
+        resp = es.search(index="test-index", query=query)
+        resp = resp['_source']
+        results = resp
+        '''
+        
         terms = [term.term for term in query.queryterm]
         results = []
         all_matches={}
@@ -35,7 +74,10 @@ def search():
     else:
 
         results = es.get(index='data')
-        return render_template('search_results.html', results)
+        '''
+    
+
+        return render_template('/search_results.html', results)
 
 @app.route('/feedback', methods=['POST'])
 def submit_feedback():
@@ -46,4 +88,4 @@ def submit_feedback():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host= 'localhost',port = 8000,debug=True)

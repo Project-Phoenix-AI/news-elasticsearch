@@ -5,10 +5,18 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/search" method="get">
-        <label for="search_query">Search:</label>
-        <input type="text" id="search_query" name="q">
-        <input type="text" name="q"  id="search_form_input" class="search__input--adv js-search-input">
-        <button type="submit">Search</button>
-    </form>
+    
+    <div class="search-result">  
+        <h2 style="width:100%;text-align:center;">SEARCH ENGINES DD2477</h2>
+    </div>
+    <div  class ="search-wrap--home" >
+        <form action="/" method="post">
+            <!-- <label for="search_query">Search:</label> -->
+            <!-- <input type="text" id="search_query" name="query"> -->
+            <input type="text" name="query"  id="search_form_input" class="search__input--adv js-search-input",autocomplete ="on" autocorrect="on">
+
+            <button class = "search-button search-button:hover search__input--adv1" type="submit">Search</button>
+        </form>
+    </div>
+    
 {% endblock %}

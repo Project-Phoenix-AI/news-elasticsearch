@@ -6,11 +6,11 @@
 
 {% block main %}
     <h1>Search Results</h1>
-    {% if results %}
+    {% if results%}
     {% for result in results %}
-        <div class="search-result">
-        <h3>{{ result.title }}</h3>
-        <p>{{ result.text }}</p>
+        <div class="search-result">  
+        <h3>{{ result["_source"]["name"] }}</h3>
+        <p>{{ result["_source"]["text"][:300] }}</p>    
         </div>
     {% endfor %}
     {% else %}
