@@ -10,7 +10,9 @@
     {% for result in results %}
         <div class="search-result">  
         <h3>{{ result["_source"]["name"] }}</h3>
-        <p>{{ result["_source"]["text"][:300] }}</p>    
+        <a href= {{ result["_source"]["link"] }} rel="noopener" target="_self" class="eVNpHGjtxRBq_gLOfGDr LQNqh2U1kzYxREs65IJu" data-testid="result-title-a" data-handled-by-react="true">
+            <span>{{ result["_source"]["name"] }}</span></a>
+        <p>{{ result["_source"]["text"][:400] }}</p>    
         </div>
     {% endfor %}
     {% else %}
