@@ -24,7 +24,10 @@ def index():
             query['query_string']['fields'] = ["title","text"]
             query['query_string']['query'] = q
             query['query_string']['default_operator'] = 'OR'
+            
 
+            #s = defaultdict(dict)
+            #s['text.keyword']
 
 
             resp = es.search(index="test_index", query=query)

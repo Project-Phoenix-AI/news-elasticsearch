@@ -57,13 +57,13 @@ if __name__ == '__main__':
     es.crawl()
     es.run()
     print("This is the result")
-    #es.get_scraped_items()
+    es.get_scraped_items()
 
     #json_object = json.dumps(es.scraped_items, indent=4)
     #with open("sample.json", "w") as outfile:
     #   outfile.write(json_object)
 
-    #es.index_docs('test_index')
+    es.index_docs('test_index')
 
 
     #resp = es.get(index="test-index", id=2)
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     # #q = q.format(query_ = "pizza")
     # #print(' = query = ')
     # #print(q)
-    # resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
+    resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
     # resp = resp['hits']
 
     # print(resp)
