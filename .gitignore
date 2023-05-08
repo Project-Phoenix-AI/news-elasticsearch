@@ -1,5 +1,8 @@
+#Ignore
 .DS_Store
 PythonVersion
 __pycache__
 myenv/
-scraper/
+*.json
+.vscode
+.idea
