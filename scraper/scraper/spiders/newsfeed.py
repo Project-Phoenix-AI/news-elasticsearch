@@ -6,6 +6,10 @@ import scrapy
 class Spider(scrapy.Spider):
     name = "newsfeed"
 
+    custom_settings = {
+        'LOG_LEVEL': 'WARNING',
+    }
+
     def start_requests(self, **kwargs):
         urlsBBC = [
             'https://www.bbc.com/',
@@ -51,7 +55,7 @@ class Spider(scrapy.Spider):
         for news in allNews:
             link = news.xpath('./@href').get().strip()
 
-            if(link.split("/")[0] != "https:"):
+            if(link.split("/")[0] != "http" and link.split("/")[0] != "https" and link.split("/")[0] != "https:" and link.split("/")[0] != "http:"):
                 link = "https://www.bbc.com" + link
 
             yield scrapy.Request(url=link, callback=self.parse_article)
@@ -64,28 +68,29 @@ class Spider(scrapy.Spider):
         for news in allNews:
             link = news.xpath('./@href').get().strip()
 
-            if(link.split("/")[0] != "https:"):
+            if(link.split("/")[0] != "http" and link.split("/")[0] != "https" and link.split("/")[0] != "https:" and link.split("/")[0] != "http:"):
                 link = "https://edition.cnn.com" + link
 
             yield scrapy.Request(url=link, callback=self.parse_article)
 
     def parse_article(self, response):
             article = response.xpath('//article//p/text()|//article//p/b/text()|//article//p/span/text()|//div[contains(@class, "BasicArticle__main")]//div/text()|//div[contains(@class, "BasicArticle__main")]//div/a/text()')
-            name = response.xpath('//article//h1/text()|//div//h1/text()').get().strip()
+            name = response.xpath('//article//h1/text()|//div//h1/text()').get()
 
+            if(name != ""):
+                text = ""
 
-            text = ""
+                for txt in article:
+                    text = text + txt.get().strip()
 
-            for txt in article:
-                text = text + txt.get().strip()
-
-            try:
-                yield self.output_callback({
-                    'name': name,
-                    'link': response.request.url,
-                    'text': text
-                })
-            except:
-                print("Empty")
+                
+                try:
+                    yield self.output_callback({
+                        'name': name.strip(),
+                        'link': response.request.url,
+                        'text': text
+                    })
+                except:
+                    print("Empty")
 
             
