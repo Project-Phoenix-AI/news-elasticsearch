@@ -26,9 +26,7 @@ def index():
             query['query_string']['default_operator'] = 'OR'
             
 
-            #s = defaultdict(dict)
-            #s['text.keyword']
-
+          
 
             resp = es.search(index="test_index", query=query)
             results = resp['hits']['hits']
