@@ -59,38 +59,38 @@ if __name__ == '__main__':
     print("This is the result")
     es.get_scraped_items()
 
-    #json_object = json.dumps(es.scraped_items, indent=4)
-    #with open("sample.json", "w") as outfile:
-    #   outfile.write(json_object)
+        json_object = json.dumps(es.scraped_items, indent=4)
+        with open("sample.json", "w") as outfile:
+           outfile.write(json_object)
 
     es.index_docs('test_index')
 
 
-    #resp = es.get(index="test-index", id=2)
-    #print(resp['_source'])
-    #print(len(es.scraped_items))
+        #resp = es.get(index="test-index", id=2)
+        #print(resp['_source'])
+        #print(len(es.scraped_items))
 
-    # q = {"match_phrase":{
-    #             "text" : "pizza",
-    #                     } ,
-                        
-    # }
+        # q = {"match_phrase":{
+        #             "text" : "pizza",
+        #                     } ,
+                            
+        # }
 
-    # query1 = defaultdict(dict)
-    # query1['match_phrase']['text'] ="pizza"
-    # #query1['match_phrase']['slope'] ="2"
-    # print(query1)
+        # query1 = defaultdict(dict)
+        # query1['match_phrase']['text'] ="pizza"
+        # #query1['match_phrase']['slope'] ="2"
+        # print(query1)
 
 
-    
-    # #q['match_phrase']['text'] = "cluster"
-    # #q = q.format(query_ = "pizza")
-    # #print(' = query = ')
-    # #print(q)
-    resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
-    # resp = resp['hits']
+        
+        # #q['match_phrase']['text'] = "cluster"
+        # #q = q.format(query_ = "pizza")
+        # #print(' = query = ')
+        # #print(q)
+        # resp = es.es.search(index="test_index", query = query1)#{"match_all":{"text":"pizza"}})
+        # resp = resp['hits']
 
-    # print(resp)
+        # print(resp)
     
 
 
