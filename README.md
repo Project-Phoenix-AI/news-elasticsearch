@@ -1,6 +1,6 @@
 # DD2477_Project
 
-# Initialize Elasticsearch
+## Initialize Elasticsearch
 
 Run Elasticsearch via Docker:
 
