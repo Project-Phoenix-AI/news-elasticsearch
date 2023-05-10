@@ -17,6 +17,16 @@ The indexed data can be visulized at
 $ curl "http://localhost:9200/data"
 ```
 
+Example of the indexed data
+```
+{
+    "name": "What it will take to save American democracy",
+    "link": "https://edition.cnn.com/2022/01/09/opinions/fareed-zakaria-the-fight-to-save-american-democracy-op-ed/index.html",
+    "text": "Editor\u2019s Note:On Sunday at 9 p.m. ET, CNN will air Fareed Zakaria\u2019s latest special report, \u201cThe Fight to Save American..."
+    "rating": 1
+}
+```
+
 
 ## Run the program after having initialized Elasticsearch
 Start the UI for the engine
