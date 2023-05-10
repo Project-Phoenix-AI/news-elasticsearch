@@ -58,6 +58,12 @@
 .search--focus .search__input--adv {
   opacity: 1;
 }
+.result--more__btn {
+  line-height: 2.8;
+  font-weight: 600;
+  font-size: 1.1em;
+  text-transform: capitalize;
+}
 .search-wrap--home {
   padding: 1.3em 0.8em 1em;
   max-width: 590px;
@@ -81,6 +87,44 @@ html[data-ntp-features*="tracker-stats-widget:off"] .page-chrome_newtab .newtab_
 body, input, select, textarea {
   font-family: "DDG_ProximaNova","DDG_ProximaNova_UI_0","DDG_ProximaNova_UI_1","DDG_ProximaNova_UI_2","DDG_ProximaNova_UI_3","DDG_ProximaNova_UI_4","DDG_ProximaNova_UI_5","DDG_ProximaNova_UI_6","Proxima Nova","Helvetica Neue","Helvetica","Segoe UI","Nimbus Sans L","Liberation Sans","Open Sans",FreeSans,Arial,sans-serif;
   color: #222;
+}
+.btn, .button, .btn--icon, .btn--top, .header__button, .header__button--menu {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  -webkit-transition: none .3s ease-in-out;
+  -webkit-transition-delay: 0s;
+  -moz-transition: none .3s ease-in-out 0s;
+  -o-transition: none .3s ease-in-out 0s;
+  transition: none .3s ease-in-out 0s;
+  outline: none !important;
+  background-color: #fafafa;
+  border-color: #ddd;
+  line-height: 2;
+  font-weight: normal;
+  font-size: 1em;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: #333;
+}
+
+.btn--full, .btn--fill {
+  display: block;
+}
+
+#result-stats {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: Google Sans,arial,sans-serif;
+  padding-top: 0px;
+  padding-bottom: 0;
+  padding-right: 8px;
+}
+div {
+  display: block;
 }
 
 

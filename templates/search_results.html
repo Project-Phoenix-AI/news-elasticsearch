@@ -2,15 +2,15 @@
 
 {% block title %}
     <title>Search Engine</title>
-   
-
 {% endblock %}
 
 {% block main %}
     <h1>Search Results</h1>
-    <a href= "/" rel="noopener" target="_self" class="eVNpHGjtxRBq_gLOfGDr LQNqh2U1kzYxREs65IJu" data-testid="result-title-a" data-handled-by-react="true">
-        <span>Home</span></a>
+    <!-- <p1>{{number_of_results}} results in {{ took }}s.</p1> -->
+    <a href= "/" rel="noopener" target="_self" class="eVNpHGjtxRBq_gLOfGDr LQNqh2U1kzYxREs65IJu" data-testid="result-title-a" data-handled-by-react="true"> <span>Home</span></a>
     {% if results%}
+    <div id="result-stats">{{number_of_results}} results <nobr>  ({{ took }} seconds)&nbsp;</nobr></div>
+
     {% for result in results %}
         <div class="search-result">  
         <h3>{{ result["_source"]["name"] }}</h3>
@@ -20,6 +20,7 @@
         </div>
     {% endfor %}
     {% else %}
-    <p>No results found.</p>
+    <h3>No results found.</h3>
     {% endif %}
+    <!-- <a href="javascript:;" class="result--more__btn btn btn--full">More Results</a> -->
 {% endblock %}

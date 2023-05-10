@@ -1,8 +1,9 @@
 from collections import defaultdict
+import time
 from flask import Flask, request, render_template
-from ElasticSearch import ElasticSearch
+#from ElasticSearch import ElasticSearch
 from elasticsearch import Elasticsearch
-
+from elasticsearch_dsl import Q
 from RetrieveResults import *
 import requests
 import json
@@ -15,25 +16,30 @@ es = Elasticsearch('http://localhost:9200')
 def index():
     if request.method == 'POST':
         q = request.form['query']  # Extract the search query from the form data
-        results = -1
         if len(q.split(' ')) >= 0:
             # Result algorithm
             query = defaultdict(dict)
             #query['match']['text'] = q
 
-            query['query_string']['fields'] = ["title","text"]
-            query['query_string']['query'] = q
-            query['query_string']['default_operator'] = 'OR'
+            # query['query_string']['fields'] = ["title","text"]
+            # query['query_string']['query'] = q
+            # query['query_string']['default_operator'] = 'OR'
+            #query['size'] = 30
+            query['multi_match']['query'] = q
+            query['multi_match']['fields'] = ['name^2','text']
+            query['multi_match']['type'] = 'best_fields'
             
 
           
-
-            resp = es.search(index="test_index", query=query)
+            t_initial = time.time()
+            resp = es.search(index="test_index", query=query,size = 50)
+            t_final = time.time()
+            number_of_results = resp['hits']['total']['value']
             results = resp['hits']['hits']
-
+            took = round((t_final - t_initial),2)
             # print(type(results))
             # print(results)
-            return render_template('/search_results.html',results=results)
+            return render_template('/search_results.html',results=results, number_of_results = number_of_results,took = took)
     return render_template('/index.html')
 
 
@@ -51,8 +57,10 @@ def search():
     if len(query.split(' ')) >= 0:
         # Result algorithm
         query = defaultdict(dict)
+        query['size'] = 20
         query['match']['text'] = query
         resp = es.search(index="test-index", query=query)
+        print(resp)
         resp = resp['_source']
         results = resp
         '''
@@ -91,5 +99,5 @@ def submit_feedback():
 
 
 if __name__ == '__main__':
-    ElasticSearch.start()
+    #ElasticSearch.start()
     app.run(host= 'localhost',port = 8000,debug=True)
