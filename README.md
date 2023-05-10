@@ -10,3 +10,9 @@ docker run -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -e "discovery.type=sing
 ```bash
 python ElasticSearch.py
 ```
+
+The indexed data can be visulized at
+
+```bash
+$ curl "http://localhost:9200/data"
+```
