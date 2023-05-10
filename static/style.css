@@ -126,5 +126,32 @@ body, input, select, textarea {
 div {
   display: block;
 }
+.like-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.like-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.like-button:hover {
+  color: #007bff;
+}
+
+.dislike-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.dislike-button:hover {
+  color: #007bff;
+}
+
 
 
