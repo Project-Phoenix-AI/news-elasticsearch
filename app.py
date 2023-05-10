@@ -1,7 +1,7 @@
 from collections import defaultdict
 import time
 from flask import Flask, request, render_template
-#from ElasticSearch import ElasticSearch
+
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Q
 from RetrieveResults import *
@@ -99,5 +99,4 @@ def submit_feedback():
 
 
 if __name__ == '__main__':
-    #ElasticSearch.start()
     app.run(host= 'localhost',port = 8000,debug=True)
