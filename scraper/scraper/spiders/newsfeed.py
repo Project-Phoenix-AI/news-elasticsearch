@@ -88,7 +88,8 @@ class Spider(scrapy.Spider):
                     yield self.output_callback({
                         'name': name.strip(),
                         'link': response.request.url,
-                        'text': text
+                        'text': text,
+                        'ranking': 1
                     })
                 except:
                     print("Empty")
