@@ -1,6 +1,5 @@
 from collections import defaultdict
 from flask import Flask, request, render_template
-from ElasticSearch import ElasticSearch
 from elasticsearch import Elasticsearch
 
 from RetrieveResults import *
@@ -91,5 +90,4 @@ def submit_feedback():
 
 
 if __name__ == '__main__':
-    ElasticSearch.start()
     app.run(host= 'localhost',port = 8000,debug=True)

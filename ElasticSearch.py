@@ -49,19 +49,17 @@ class ElasticSearch():
                 break
         
 
-
-
-
 if __name__ == '__main__':
     es = ElasticSearch('http://localhost:9200')
     es.crawl()
     es.run()
-    print("This is the result")
-    es.get_scraped_items()
+    #print("This is the result")
+    #es.get_scraped_items()
 
-        json_object = json.dumps(es.scraped_items, indent=4)
-        with open("sample.json", "w") as outfile:
-           outfile.write(json_object)
+    #Gives a json file to see that the items are created correctly
+    json_object = json.dumps(es.scraped_items, indent=4)
+    with open("sample.json", "w") as outfile:
+        outfile.write(json_object)
 
     es.index_docs('test_index')
 
