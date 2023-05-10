@@ -44,42 +44,44 @@ def index():
             t_final = time.time()
             number_of_results = resp['hits']['total']['value']
             results = resp['hits']['hits']
-            #print(results[0]['_source']['ranking'])
             took = round((t_final - t_initial),2)
-            #print('hits')
-            #print(results)
-            # print(type(results))
-            # print(results)
             return render_template('/search_results.html',results=results, number_of_results = number_of_results,took = took)
     return render_template('/index.html')
 
 
 
 
-@app.route('/search', methods=['POST'])
-def search():
-    query = request.form['query']  # Extract the search query from the form data
-    results = -1
-    if len(query.split(' ')) >= 0:
+@app.route('/search/<name>', methods=['POST'])
+def search(name):
+    q_ = request.form['query']  # Extract the search query from the form data
+    if len(q_.split(' ')) >= 0:
         # Result algorithm
-        # query = defaultdict(dict)
-        # query['size'] = 20
-        # query['match']['text'] = query
+        query = defaultdict(dict)
+        query['multi_match']['query'] = q_
+        query['multi_match']['fields'] = ['name^2','text']
+        query['multi_match']['type'] = 'best_fields'
 
         # q = Q('bool', should=[
-        #         Q('match', content= query),
-        #         Q('match', content={'query': query, 'operator': 'and'}),
-        #         Q('match_phrase', content={'query' : query,'boost' : 2}),
-        #         Q('multi_match', query= query, fields=['name', 'text^2','ranking^3'])
-        #     ])
+        #     Q('match', content= q_),
+        #     Q('match', content={'query': q_, 'operator': 'and'}),
+        #     Q('match_phrase', content={'query' : q_,'boost' : 2}),
+        #     Q('multi_match', query= q_, fields=['name', 'text^2'])
+        # ])
 
-
-        resp = es.search(index="test-index", query=query)
-        print(resp)
-        resp = resp['_source']
-        print(resp)
-        results = resp
-        return render_template('/search_results.html', results)
+        t_initial = time.time()
+        resp = es.search(index="test-index", query=query,size = 50)
+        #resp = s.query(q).extra(size=50).collapse(field='name.raw').execute()
+        #s = Search(using=es, index='my_index').query(q)
+        #s = s.extra(size=1000)  # Increase the result size to 1000 hits
+        #s = s.aggs.bucket('name','',)  # Collapse the results by the 'name' field
+        #s = s.aggs.bucket('name_terms', 'terms', field='name', size=10000)#.metric('top_hits', 'top_hits', size=1)
+        #resp = s.execute()
+        t_final = time.time()
+        number_of_results = resp['hits']['total']['value']
+        results = resp['hits']['hits']
+        took = round((t_final - t_initial),2)
+        return render_template('/search_results.html',results=results, number_of_results = number_of_results,took = took)
+    return render_template('/index.html')
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -94,14 +96,14 @@ def update():
         data_ranking = 0.5
     elif data_ranking > 2.5:
         data_ranking = 2.5
-    #print(result_id,data_ranking,increment)
+    print(result_id,data_ranking,increment)
     doc = defaultdict(dict)
     doc['doc']['ranking'] = data_ranking    
     
-    
     es.update(index="test-index", id=int(result_id), body=doc)
     # do something with the result_id and data_ranking data
-    return 'thanks for the feedback'
+    return render_template('/index.html')
+
 
 
 if __name__ == '__main__':

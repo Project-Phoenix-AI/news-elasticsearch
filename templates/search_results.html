@@ -30,28 +30,6 @@
                   <input type="hidden" name="increment" value="-0.15">
                   <button id="decrement-button" class="dislike-button"><i class="fas fa-thumbs-down"></i></button>
                 </form>
-                <p id="result-placeholder"></p> <!-- Placeholder for the returned values -->
-                <script>
-                  // Submit the form when the buttons are clicked
-                  document.querySelectorAll('.like-buttons button').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                      event.preventDefault(); // Prevent the default button behavior (submitting the form)
-                      const form = event.target.closest('form'); // Get the parent form
-                      const formData = new FormData(form); // Create a new FormData object from the form
-                      fetch(form.action, {
-                        method: form.method,
-                        body: formData
-                      })
-                      .then(response => response.text()) // Get the response text
-                      .then(result => {
-                        const resultPlaceholder = document.getElementById('result-placeholder');
-                        resultPlaceholder.innerHTML = result; // Set the returned values as the innerHTML of the placeholder
-                      })
-                      .catch(error => console.error(error));
-                    });
-                  });
-                </script>
-                <p></p>
               </div>
               
            

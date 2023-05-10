@@ -40,19 +40,6 @@ class ElasticSearch():
             resp = self.es.index(index= index, id=self.id_, document=doc)
             self.id_ += 1 
 
-
-
-    def get_scraped_items(self):
-        '''
-        helper function to understand the scraped items
-        '''
-        for i,item in enumerate(self.scraped_items):
-            print(item)
-            print('=======================')
-            if i == 3:
-                break
-        
-
 if __name__ == '__main__':
 
     # es = ElasticSearch('http://localhost:9200')
