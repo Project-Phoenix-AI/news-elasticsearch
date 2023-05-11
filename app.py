@@ -76,7 +76,10 @@ def search():
     resp = es.search(index="test-index", query=query,size = 50)
     t_final = time.time()
     for document in resp['hits']['hits']:
-        document['_score'] *= document['_source']['ranking']
+        try:
+            document['_score'] *= document['_source']['ranking']
+        except:
+            pass
     
     number_of_results = resp['hits']['total']['value']
     results = resp['hits']['hits']
