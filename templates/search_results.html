@@ -17,17 +17,19 @@
             <a href= {{ result["_source"]["link"] }} rel="noopener" target="_self" class="eVNpHGjtxRBq_gLOfGDr LQNqh2U1kzYxREs65IJu" data-testid="result-title-a" data-handled-by-react="true">
                 <span>{{ result["_source"]["name"] }}</span></a>   
             <p>{{ result["_source"]["text"][:400] }}</p>
+            <p>Score : {{ result["_score"]}}</p>
+
             <div class="like-buttons">
                 <form method="POST" action="/update">
                   <input type="hidden" name="result-id" value="{{ result['_id'] }}">
                   <input type="hidden" name="data-ranking" value="{{ result['_source']['ranking'] }}">
-                  <input type="hidden" name="increment" value="0.15">
+                  <input type="hidden" name="increment" value="0.35">
                   <button id="increment-button" class="like-button"><i class="fas fa-thumbs-up"></i></button>
                 </form>
                 <form method="POST" action="/update">
                   <input type="hidden" name="result-id" value="{{ result['_id'] }}">
                   <input type="hidden" name="data-ranking" value="{{ result['_source']['ranking'] }}">
-                  <input type="hidden" name="increment" value="-0.15">
+                  <input type="hidden" name="increment" value="-0.25">
                   <button id="decrement-button" class="dislike-button"><i class="fas fa-thumbs-down"></i></button>
                 </form>
               </div>

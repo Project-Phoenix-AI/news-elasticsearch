@@ -61,6 +61,7 @@ def search():
         query['multi_match']['query'] = q_
         query['multi_match']['fields'] = ['name^2','text']
         query['multi_match']['type'] = 'best_fields'
+       # query['functions']['script_score'] = {'script':{'source' : "_score * " }}
 
 
         #query = defaultdict(dict)
@@ -76,8 +77,12 @@ def search():
     t_final = time.time()
     for document in resp['hits']['hits']:
         document['_score'] *= document['_source']['ranking']
+    
     number_of_results = resp['hits']['total']['value']
     results = resp['hits']['hits']
+    print(type(results))
+
+    results = sorted(results, key = lambda x  : x['_score'], reverse = True)
     took = round((t_final - t_initial),2)
     return render_template('/search_results.html',results=results, number_of_results = number_of_results,took = took,query = q_.lower())
 #return render_template('/index.html')
@@ -91,9 +96,9 @@ def update():
 
     # Update the data ranking of the document with result id
     data_ranking += increment
-    if data_ranking < 0.5:
+    if data_ranking < 0.1:
         data_ranking = 0.5
-    elif data_ranking > 2.5:
+    elif data_ranking > 4.5:
         data_ranking = 2.5
     print(result_id,data_ranking,increment)
     doc = defaultdict(dict)
