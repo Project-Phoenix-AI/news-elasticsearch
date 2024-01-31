@@ -1,4 +1,4 @@
-# DD2477_Project
+# Web news scaper with Elastic
 
 ## Initialize Elasticsearch
 
